@@ -1,0 +1,24 @@
+<main class="page">
+  <h1>プロフィール編集</h1>
+  <% if @user.errors.any? %>
+    <ul class="errors">
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= form_with model: @user do |form| %>
+    <div class="field">
+      <%= form.label :uid, "ユーザーID" %>
+      <%= form.text_field :uid, required: true, autocomplete: "username" %>
+    </div>
+    <div class="field">
+      <%= form.label :age, "年齢" %>
+      <%= form.number_field :age, min: 0 %>
+    </div>
+    <%= form.submit "保存" %>
+  <% end %>
+
+  <p><%= link_to "トップへ戻る", root_path %></p>
+</main>

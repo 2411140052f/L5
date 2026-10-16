@@ -8,7 +8,11 @@
     <% @users.each do |user| %>
       <li>
         <%= user.uid.presence || "未登録ユーザー (#{user.id})" %>
+        <% if user.age.present? %>
+          （<%= user.age %>歳）
+        <% end %>
         <% if current_user&.id == user.id %>
+          <%= link_to "プロフィール編集", edit_user_path(user) %>
           <%= button_to "アカウント削除", user_path(user), method: :delete,
                 form: { data: { turbo_confirm: "アカウントと投稿を削除しますか？" } } %>
         <% end %>

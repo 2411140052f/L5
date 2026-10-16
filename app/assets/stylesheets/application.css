@@ -53,6 +53,7 @@ button {
 
 input[type="text"],
 input[type="password"],
+input[type="number"],
 textarea {
   box-sizing: border-box;
   width: 100%;

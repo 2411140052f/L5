@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post "top/login", to: "top#login", as: :top_login
   delete "top/logout", to: "top#logout", as: :top_logout
 
-  resources :users, only: [:index, :new, :create, :destroy]
+  resources :users, only: [:index, :new, :create, :edit, :update, :destroy]
   resources :tweets, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
 end

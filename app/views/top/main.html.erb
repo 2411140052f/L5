@@ -5,6 +5,7 @@
     <%= link_to "ユーザー一覧", users_path %>
     <% if current_user %>
       <span><%= current_user.uid %> としてログイン中</span>
+      <%= link_to "プロフィール編集", edit_user_path(current_user) %>
       <%= button_to "ログアウト", top_logout_path, method: :delete %>
     <% else %>
       <%= link_to "ログイン", top_login_form_path %>

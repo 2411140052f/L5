@@ -36,6 +36,54 @@ class SocialAppTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
+  test "a logged-in user can edit their profile without losing their session" do
+    post top_login_path, params: { uid: "one", password: "password" }
+    user = users(:one)
+
+    get edit_user_path(user)
+    assert_response :success
+    assert_select "h1", text: "プロフィール編集"
+
+    patch user_path(user), params: { user: { uid: "updated-one", age: 28 } }
+
+    assert_redirected_to root_path
+    assert_equal "updated-one", user.reload.uid
+    assert_equal 28, user.age
+    assert_equal "updated-one", session[:login_uid]
+
+    get root_path
+    assert_response :success
+    assert_select ".navigation", text: /updated-one としてログイン中/
+  end
+
+  test "users cannot edit another user's profile or change their password through profile editing" do
+    post top_login_path, params: { uid: "one", password: "password" }
+
+    get edit_user_path(users(:two))
+    assert_redirected_to root_path
+
+    assert_no_changes -> { [ users(:one).reload.uid, users(:one).reload.age ] } do
+      patch user_path(users(:two)), params: { user: { uid: "changed", age: 32 } }
+    end
+    assert_redirected_to root_path
+
+    patch user_path(users(:one)), params: {
+      user: { uid: "one", age: 26, password: "changed-password" }
+    }
+    assert_redirected_to root_path
+    assert_not users(:one).reload.authenticate("changed-password")
+  end
+
+  test "profile edits with a duplicate user id are rejected" do
+    post top_login_path, params: { uid: "one", password: "password" }
+
+    patch user_path(users(:one)), params: { user: { uid: "two", age: 29 } }
+
+    assert_response :unprocessable_entity
+    assert_select ".errors"
+    assert_equal "one", users(:one).reload.uid
+  end
+
   test "a logged-in user can post a tweet and add and remove likes" do
     post top_login_path, params: { uid: "one", password: "password" }
     assert_redirected_to root_path
