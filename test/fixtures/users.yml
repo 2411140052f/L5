@@ -1,0 +1,7 @@
+one:
+  uid: one
+  password_digest: "$2a$12$RJwyH9kBNT.g1gvTumcfCOGgPDNA0g9ZicsvRoPLL5B3lTM0Xi9ye"
+
+two:
+  uid: two
+  password_digest: "$2a$12$RJwyH9kBNT.g1gvTumcfCOGgPDNA0g9ZicsvRoPLL5B3lTM0Xi9ye"

@@ -1,24 +1,17 @@
-# README
+# つぶやきアプリ
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 起動方法
 
-Things you may want to cover:
+```sh
+bundle install
+bin/rails db:migrate
+bin/rails server
+```
 
-* Ruby version
+ブラウザーで `http://localhost:3000` を開き、「ユーザー登録」からアカウントを作成します。ログインするとツイートの投稿と、各ツイートへのいいね・いいね削除ができます。パスワードは BCrypt でハッシュ化して保存されます。
 
-* System dependencies
+## テスト
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```sh
+bin/rails test
+```

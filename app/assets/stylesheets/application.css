@@ -8,3 +8,93 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+body {
+  margin: 0;
+  color: #222;
+  background: #f5f7fa;
+  font-family: system-ui, sans-serif;
+}
+
+.page {
+  max-width: 760px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid #dce2e8;
+  border-radius: 0.5rem;
+}
+
+.navigation,
+.navigation form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navigation {
+  flex-wrap: wrap;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dce2e8;
+}
+
+.field,
+.compose form {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.6rem;
+}
+
+button,
+input[type="submit"] {
+  width: fit-content;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+.tweets,
+.users {
+  padding: 0;
+  list-style: none;
+}
+
+.tweets li,
+.users li {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #dce2e8;
+  border-radius: 0.4rem;
+}
+
+.tweet-author {
+  font-weight: 700;
+}
+
+.tweet-date,
+.like-count {
+  color: #667085;
+  font-size: 0.875rem;
+}
+
+.notice {
+  color: #176b36;
+}
+
+.alert,
+.errors {
+  color: #a12622;
+}

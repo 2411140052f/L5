@@ -1,0 +1,65 @@
+<main class="page">
+  <h1>つぶやきアプリ</h1>
+
+  <nav class="navigation">
+    <%= link_to "ユーザー一覧", users_path %>
+    <% if current_user %>
+      <span><%= current_user.uid %> としてログイン中</span>
+      <%= button_to "ログアウト", top_logout_path, method: :delete %>
+    <% else %>
+      <%= link_to "ログイン", top_login_form_path %>
+      <%= link_to "ユーザー登録", new_user_path %>
+    <% end %>
+  </nav>
+
+  <% if notice %><p class="notice"><%= notice %></p><% end %>
+  <% if alert %><p class="alert"><%= alert %></p><% end %>
+
+  <% if current_user %>
+    <section class="compose">
+      <h2>ツイートする</h2>
+      <% if @tweet&.errors&.any? %>
+        <ul class="errors">
+          <% @tweet.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <%= form_with model: (@tweet || Tweet.new) do |form| %>
+        <%= form.label :message, "メッセージ" %>
+        <%= form.text_area :message, rows: 3, maxlength: 280, required: true %>
+        <%= form.submit "投稿" %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <section>
+    <h2>みんなのツイート</h2>
+    <% if @tweets.any? %>
+      <ul class="tweets">
+        <% @tweets.each do |tweet| %>
+          <li>
+            <p class="tweet-author"><%= tweet.user&.uid.presence || "登録ユーザー" %></p>
+            <p class="tweet-message"><%= tweet.message %></p>
+            <p class="tweet-date"><%= l(tweet.created_at, format: :short) %></p>
+            <% if current_user %>
+              <% like = tweet.likes.find { |entry| entry.user_id == current_user.id } %>
+              <% if like %>
+                <%= button_to "いいね削除", like_path(like), method: :delete %>
+              <% else %>
+                <%= button_to "いいね", likes_path(tweet_id: tweet.id), method: :post %>
+              <% end %>
+              <% if tweet.user_id == current_user.id %>
+                <%= button_to "ツイート削除", tweet_path(tweet), method: :delete,
+                      form: { data: { turbo_confirm: "このツイートを削除しますか？" } } %>
+              <% end %>
+            <% end %>
+            <span class="like-count">いいね <%= tweet.likes.size %></span>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>まだツイートはありません。</p>
+    <% end %>
+  </section>
+</main>

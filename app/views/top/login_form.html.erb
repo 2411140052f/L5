@@ -1,0 +1,19 @@
+<main class="page">
+  <h1>ログイン</h1>
+  <% if alert %><p class="alert"><%= alert %></p><% end %>
+
+  <%= form_with url: top_login_path do |form| %>
+    <div class="field">
+      <%= form.label :uid, "ユーザーID" %>
+      <%= form.text_field :uid, required: true, autocomplete: "username" %>
+    </div>
+    <div class="field">
+      <%= form.label :password, "パスワード" %>
+      <%= form.password_field :password, required: true, autocomplete: "current-password" %>
+    </div>
+    <%= form.submit "ログイン" %>
+  <% end %>
+
+  <p><%= link_to "ユーザー登録", new_user_path %></p>
+  <p><%= link_to "トップへ戻る", root_path %></p>
+</main>
